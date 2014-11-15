@@ -41,9 +41,9 @@
 
 <p>In diesel engine you'll find a single core class that does all the work, it bootstraps your DSL by finding and loading your DSL's keywords and language extensions at runtime. This is done by using a nice feature provided by Java
 called the <strong>Service Provider Interface (SPI) API</strong>. I won't spend much time detailing the SPI for you, if you wish to read more about it see <a href="http://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">this Java turtorial</a>.
-The core class is the <a href="src/me/dslengine/DSLEngineScript.groovy">DSLEngineScript</a> class, it extends Groovy's Script class and adds your keywords to its meta-class and loads any extensions. The other classes used by the engine are 
-the <a href="src/me/dslengine/keyword/KeywordProvider.groovy">KeywordProvider</a> interface and the <a href="src/me/dslengine/keyword/Keyword.groovy">Keyword</a> class. You'll use these two classes to implement the actual keywords to be used in your DSL. 
-And if you want to extend the Groovy language you would implment the <a href="src/me/dslengine/extension/LanguageExtensionProvider.groovy">LanguageExtensionProvider</a> interface. This interface has a single method <code>extend(script)</code> that you will
+The core class is the <strong>DSLEngineScript</strong> class, it extends Groovy's Script class and adds your keywords to its meta-class and loads any extensions. The other classes used by the engine are 
+the <strong>KeywordProvider</strong> interface and the <strong>Keyword</strong> class. You'll use these two classes to implement the actual keywords to be used in your DSL. 
+And if you want to extend the Groovy language you would implment the <strong>LanguageExtensionProvider</strong> interface. This interface has a single method <code>extend(script)</code> that you will
 implement when you want to extend the core language, like meta-programming <code>java.lang.String</code> or <code>java.lang.Number</code>. I'll list out what steps are required to actually create a simple DSL, you can also look at the same code in the test directory if you'd prefer.</p>
 
 <p><strong>Simple Class Diagram</strong></p>
@@ -72,7 +72,7 @@ There are no external dependencies other than Groovy and Gant. To build the jar 
 
 <p>In this example we'll create a DSL that supports two keywords, <code>debug</code> and <code>echo</code>. The only function these keywords perform, is to print any string or number passed to it.</p>
 
-<p><strong>1)</strong> First we'll implement the <a href="src/me/dslengine/keyword/KeywordProvider.groovy">KeywordProvider</a> interface so that we can define our debugging keywords. In this example we use the <a href="src/me/dslengine/keyword/Keyword.groovy">Keyword</a> class directly versus extending it and creating our own class. You can choose how you prefer to do this.</p>
+<p><strong>1)</strong> First we'll implement the <strong>KeywordProvider</strong> interface so that we can define our debugging keywords. In this example we use the <strong>Keyword</strong> class directly versus extending it and creating our own class. You can choose how you prefer to do this.</p>
 
 <p><strong>DebuggingKeywordProvider.groovy</strong></p>
 
@@ -140,7 +140,7 @@ META-INF/
         me.dslengine.keyword.KeywordProvider
 </code></pre>
 
-<p><strong>5)</strong> This final step can be implemented in quite a few ways. You need to create a way to actually run your DSL scripts with the <a href="src/me/dslengine/DSLEngineScript.groovy">DSLEngineScript</a> class. I think the easiest way is to use a groovy script and run it like a shell script. In the example script below the <a href="src/me/dslengine/DSLEngineScript.groovy">DSLEngineScript</a> class is set as the script base for the groovy shell. This means that groovy scripts run in that shell will have access to your keywords. But just as important is the section of code at the beginning, it will load any jar file it finds into the runtime classpath. We created an environment variable called <code>DSLENGINE_HOME</code> that points to where we wish to run our scripts. In that location we added a <code>lib</code> directory and placed <strong>dslengine-x.x.x.jar</strong> and our provider jar in there.</p>
+<p><strong>5)</strong> This final step can be implemented in quite a few ways. You need to create a way to actually run your DSL scripts with the <strong>DSLEngineScript</strong> class. I think the easiest way is to use a groovy script and run it like a shell script. In the example script below the <strong>DSLEngineScript</strong> class is set as the script base for the groovy shell. This means that groovy scripts run in that shell will have access to your keywords. But just as important is the section of code at the beginning, it will load any jar file it finds into the runtime classpath. We created an environment variable called <code>DSLENGINE_HOME</code> that points to where we wish to run our scripts. In that location we added a <code>lib</code> directory and placed <strong>dslengine-x.x.x.jar</strong> and our provider jar in there.</p>
 
 <p><strong>dslengine</strong></p>
 
@@ -178,10 +178,10 @@ $ ./dslengine test.dsl
 <h3>
 <a id="example-language-extension" class="anchor" href="#example-language-extension" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example Language Extension</h3>
 
-<p>You'll more than likely spend most of your time developing keywords for your DSL. But you may want to extend some of Groovy's core classes or the actual script at runtime. To do this you implement the <a href="src/me/dslengine/extension/LanguageExtensionProvider.groovy">LanguageExtensionProvider</a> interface. In this example we'll extend <code>java.lang.Number</code> to do something silly. The beauty of this is that inheritance is supported,
+<p>You'll more than likely spend most of your time developing keywords for your DSL. But you may want to extend some of Groovy's core classes or the actual script at runtime. To do this you implement the <strong>LanguageExtensionProvider</strong> interface. In this example we'll extend <code>java.lang.Number</code> to do something silly. The beauty of this is that inheritance is supported,
 so <code>java.math.BigDecimal</code> will also be extended.</p>
 
-<p><strong>1)</strong> First implement the <a href="src/me/dslengine/extension/LanguageExtensionProvider.groovy">LanguageExtensionProvider</a> interface by providing an implementation for the <code>extend(script)</code> method. In this example we'll add the
+<p><strong>1)</strong> First implement the <strong>LanguageExtensionProvider</strong> interface by providing an implementation for the <code>extend(script)</code> method. In this example we'll add the
 ability to call <code>key String</code> on any number. So in your DSL if you had <code>89.key "Eighty Nine"</code> you'd see the following output <code>Eighty Nine:89</code> when it ran. You could also work with the <code>script</code> instance that's passed in.</p>
 
 <p><strong>NumberExtensionProvider.groovy</strong></p>
@@ -221,7 +221,7 @@ test.key "wow"
 
 <p>It's all good! :)</p>
 
-<p>Copyright (c) 2014 Isaac A. Gomez See the <a href="LICENSE">LICENSE</a> file for license rights and limitations (MIT).</p>
+<p>Copyright (c) 2014 Isaac A. Gomez See the <strong>LICENSE</strong> file for license rights and limitations (MIT).</p>
         </section>
 
         <footer>
