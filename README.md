@@ -8,7 +8,7 @@ In diesel engine you'll find a single core class that does all the work, it boot
 called the **Service Provider Interface (SPI) API**. I won't spend much time detailing the SPI for you, if you wish to read more about it see [this Java turtorial](http://docs.oracle.com/javase/tutorial/sound/SPI-intro.html).
 The core class is the **DSLEngineScript** class, it extends Groovy's Script class and adds your keywords to its meta-class and loads any extensions. The other classes used by the engine are 
 the **KeywordProvider** interface and the **Keyword** class. You'll use these two classes to implement the actual keywords to be used in your DSL. 
-And if you want to extend the Groovy language you would implment the **LanguageExtensionProvider** interface. This interface has a single method `extend(script)` that you will
+And if you want to extend the Groovy language you would implement the **LanguageExtensionProvider** interface. This interface has a single method `extend(script)` that you will
 implement when you want to extend the core language, like meta-programming `java.lang.String` or `java.lang.Number`. I'll list out what steps are required to actually create a simple DSL, you can also look at the same code in the test directory if you'd prefer.
 
 **Simple Class Diagram**
@@ -83,7 +83,7 @@ In this example we'll create a DSL that supports two keywords, `debug` and `echo
  
 **2)** Now compile your keyword provider class. You'll need to include the **dslengine-x.x.x.jar** in your compile classpath.
 
-**3)** Next, to actually have your keyword provider loaded and used at runtime you'll need to create a file named **me.dslengine.keyword.KeywordProvider**. In this file add a line with the fully quailified class name of your provider. If you have multiple classes you must include them each on their own line. If you copied the class in step one, your file would contain the following:
+**3)** Next, to actually have your keyword provider loaded and used at runtime you'll need to create a file named **me.dslengine.keyword.KeywordProvider**. In this file add a line with the fully qualified class name of your provider. If you have multiple classes you must include them each on their own line. If you copied the class in step one, your file would contain the following:
 
 **me.dslengine.keyword.KeywordProvider**
 
@@ -156,7 +156,7 @@ ability to call `key String` on any number. So in your DSL if you had `89.key "E
 	    }
     }
 
-**2)** The remaining steps are the same as implementing keywords, with the exception of the service provider file. For extensions you create a file named **me.dslengine.extension.LanguageExtensionProvider** with the fully quailified class name 
+**2)** The remaining steps are the same as implementing keywords, with the exception of the service provider file. For extensions you create a file named **me.dslengine.extension.LanguageExtensionProvider** with the fully qualified class name 
 of your extension provider. It too should be placed in the `services` directory in `META-INF` of your jar. Keywords and extensions can live together in the same jar or separate jars, they will all be found at runtime. 
 
 **me.dslengine.extension.LanguageExtensionProvider**
