@@ -44,7 +44,7 @@ called the <strong>Service Provider Interface (SPI) API</strong>. I won't spend 
 The core class is the <strong>DSLEngineScript</strong> class, it extends Groovy's Script class and adds your keywords to its meta-class and loads any extensions. The other classes used by the engine are 
 the <strong>KeywordProvider</strong> interface and the <strong>Keyword</strong> class. You'll use these two classes to implement the actual keywords to be used in your DSL. 
 And if you want to extend the Groovy language you would implement the <strong>LanguageExtensionProvider</strong> interface. This interface has a single method <code>extend(script)</code> that you will
-implement when you want to extend the core language, like meta-programming <code>java.lang.String</code> or <code>java.lang.Number</code>. I'll list out what steps are required to actually create a simple DSL, you can also look at the same code in the test directory if you'd prefer.</p>
+implement when you want to extend the core language, like meta-programming <code>java.lang.String</code> or <code>java.lang.Number</code>. I'll list out what steps are required to create a simple DSL that you can test with. If you prefer, you can look at all the same code in the <code>test</code> directory. In that directory you'll find a groovy script and a java class that you can use to run your DSLs.</p>
 
 <p><strong>Simple Class Diagram</strong></p>
 
@@ -214,6 +214,60 @@ echo "This is cool stuff!"
 89.key "Eighty Nine"
 def test = new BigDecimal(99)
 test.key "wow"
+</code></pre>
+
+<h3>
+<a id="bonus-java-example" class="anchor" href="#bonus-java-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bonus Java Example</h3>
+
+<p>It's quite simple to write your DSL with the Groovy language, but what about using it in a Java application? Since everything written in Groovy is compiled to Java bytecode it's quite simple. All you need when you compile and run your Java application is a few jars. The example java class below is also included in the <code>test</code> directory of this project. Once compiled it can be used in a Java application or run in a terminal window. This is just a bare bones implementation, you may want to use this as a point of reference.</p>
+
+<p><strong>Compile time classpath dependencies</strong></p>
+
+<ul>
+<li>The latest dslengine-x.x.x.jar</li>
+<li>The groovy-x.x.x.jar, I use the one located in my groovy-2.3.7 lib directory</li>
+</ul>
+
+<p><strong>Runtime classpath dependencies, same as compile time plus:</strong></p>
+
+<ul>
+<li>Your keyword and language extension jar(s)</li>
+</ul>
+
+<p><strong>DieselEngineScriptRunner.java</strong></p>
+
+<pre><code>import groovy.lang.GroovyShell;
+import org.codehaus.groovy.control.CompilerConfiguration;
+import java.io.File;
+import java.io.IOException;
+
+public class DieselEngineScriptRunner {
+
+    private GroovyShell shell;
+
+    public DieselEngineScriptRunner() {
+        CompilerConfiguration configuration = new CompilerConfiguration();
+        configuration.setScriptBaseClass("me.dslengine.DSLEngineScript");
+        shell = new GroovyShell(configuration);
+    }
+
+    public Object evaluateScript(File script) throws IOException {
+        return shell.evaluate(script);
+    }
+
+    public Object evaluateScript(String script) {
+        return shell.evaluate(script);
+    }
+
+    public static void main(String[] args) {
+        try {
+            DieselEngineScriptRunner runner = new DieselEngineScriptRunner();
+            runner.evaluateScript(new File(args[0]));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}
 </code></pre>
 
 <h2>
