@@ -225,7 +225,7 @@ test.key "wow"
 
 <ul>
 <li>The latest dslengine-x.x.x.jar</li>
-<li>The groovy-x.x.x.jar, I use the one located in my groovy-2.3.7 lib directory</li>
+<li>The groovy-x.x.x.jar, I use the one located in my groovy-2.3.7 <code>lib</code> directory</li>
 </ul>
 
 <p><strong>Runtime classpath dependencies, same as compile time plus:</strong></p>
@@ -268,6 +268,16 @@ public class DieselEngineScriptRunner {
         }
     }
 }
+</code></pre>
+
+<p>To compile your java class you'll more than likely run something similar to:</p>
+
+<pre><code>$ javac -cp dslengine-0.8.0.jar:groovy-2.3.7.jar DieselEngineScriptRunner.java
+</code></pre>
+
+<p>To test it you may run the following: </p>
+
+<pre><code>$ java -cp dslengine-0.8.0.jar:groovy-2.3.7.jar:your-keywords-extensions.jar:. DieselEngineScriptRunner &lt;script&gt;
 </code></pre>
 
 <h2>
