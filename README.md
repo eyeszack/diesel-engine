@@ -221,11 +221,11 @@ It's quite simple to write your DSL with the Groovy language, but what about usi
 	
 To compile your java class you'll more than likely run something similar to:
 
-	$ javac -cp dslengine-0.8.0.jar:groovy-2.3.7.jar DieselEngineScriptRunner.java
+	$ javac -cp dslengine-1.0.0.jar:groovy-2.3.7.jar DieselEngineScriptRunner.java
 	
 To test it you may run the following: 
 
-	$ java -cp dslengine-0.8.0.jar:groovy-2.3.7.jar:your-keywords-extensions.jar:. DieselEngineScriptRunner <script>
+	$ java -cp dslengine-1.0.0.jar:groovy-2.3.7.jar:your-keywords-extensions.jar:. DieselEngineScriptRunner <script>
 
 
 ## License
