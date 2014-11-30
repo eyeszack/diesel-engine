@@ -1,0 +1,48 @@
+includeTargets << gant.targets.Clean
+cleanPattern << ['**/*.class', '**/*.jar']
+cleanDirectory << ['build/me', 'test/lib']
+clobberDirectory << ['build', 'dist', 'test/lib']
+
+sourceDirectory = 'src'
+buildDirectory = 'build'
+distDirectory = 'dist'
+testDirectory = 'test'
+
+version = '0.9.0'
+	
+target(init:'Create directories for builds.') {
+	ant.mkdir(dir:buildDirectory)
+	ant.mkdir(dir:distDirectory)
+}
+
+target(compile:'Compile dsl source.') {
+   depends(clean)
+   ant.taskdef(name:'groovyc', classname:'org.codehaus.groovy.ant.Groovyc')
+   groovyc(srcdir:sourceDirectory , destdir:buildDirectory)
+}
+
+target(jar:'Create core dsl jar.') {
+   ant.copy(file:"LICENSE", todir:"${buildDirectory}")
+   ant.jar(destfile:"${distDirectory}/dslengine-${version}.jar", basedir:buildDirectory)
+}
+
+target(testenv:'Create mock environment for testing.') {
+	ant.mkdir(dir:testDirectory+"/lib")
+    ant.copy(file:"${distDirectory}/dslengine-${version}.jar", todir:"${testDirectory}/lib")
+    ant.taskdef(name:'groovyc', classname:'org.codehaus.groovy.ant.Groovyc')
+    groovyc(srcdir:testDirectory, destdir:testDirectory, classpath:"${testDirectory}/lib/dslengine-${version}.jar")
+	ant.jar(destfile:"${testDirectory}/lib/dslengine-debug-impl.jar", basedir:testDirectory, includes:"*.class") {
+		service(type:"me.dslengine.extension.LanguageExtensionProvider", provider:"NumberExtensionProvider")
+		service(type:"me.dslengine.keyword.KeywordProvider", provider:"DebuggingKeywordProvider")
+	}
+	def script = new File("${testDirectory}/dslengine")
+	script.setExecutable(true) && script.canExecute()
+}
+
+target(all:'Too lazy to run individual targets.') {
+	depends(init)
+	depends(compile)
+	depends(jar)
+}
+
+setDefaultTarget(all)
