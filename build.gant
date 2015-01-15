@@ -8,7 +8,7 @@ buildDirectory = 'build'
 distDirectory = 'dist'
 testDirectory = 'test'
 
-version = '1.0.0'
+version = '1.1.0'
 	
 target(init:'Create directories for builds.') {
 	ant.mkdir(dir:buildDirectory)
