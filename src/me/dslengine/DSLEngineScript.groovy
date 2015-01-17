@@ -5,7 +5,7 @@ import me.dslengine.keyword.*
 
 abstract class DSLEngineScript extends Script {
 
-    def DSLEngineScript() {
+    DSLEngineScript() {
         //Enable inheritance
         ExpandoMetaClass.enableGlobally()
         

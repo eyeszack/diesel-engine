@@ -2,8 +2,7 @@ import me.dslengine.keyword.*
 
 class DebuggingKeywordProvider implements KeywordProvider {
     def keywords = []
-    
-    def description = "Debugging Keywords - for testing Diesel Engine!!"
+    String description = "Debugging Keywords - for testing Diesel Engine!!"
    
     void addKeyword(keyword) {
         keywords << keyword
