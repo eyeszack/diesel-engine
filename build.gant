@@ -30,7 +30,7 @@ target(testenv:'Create mock environment for testing.') {
 	ant.mkdir(dir:testDirectory+"/lib")
     ant.copy(file:"${distDirectory}/dslengine-${version}.jar", todir:"${testDirectory}/lib")
     ant.taskdef(name:'groovyc', classname:'org.codehaus.groovy.ant.Groovyc')
-    groovyc(srcdir:testDirectory, destdir:testDirectory, classpath:"${testDirectory}/lib/dslengine-${version}.jar")
+    groovyc(srcdir:testDirectory, destdir:testDirectory, classpath:"${testDirectory}/lib/dslengine-${version}.jar", excludes:"*Test.groovy")
 	ant.jar(destfile:"${testDirectory}/lib/dslengine-debug-impl.jar", basedir:testDirectory, includes:"*.class") {
 		service(type:"me.dslengine.extension.LanguageExtensionProvider", provider:"NumberExtensionProvider")
 		service(type:"me.dslengine.keyword.KeywordProvider", provider:"DebuggingKeywordProvider")

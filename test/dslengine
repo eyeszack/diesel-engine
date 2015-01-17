@@ -2,10 +2,12 @@
 import groovy.io.FileType
 
 new File("${System.getenv()["DSLENGINE_HOME"]}/lib").eachFile(FileType.FILES) {
-    this.class.classLoader.rootLoader.addURL(it.toURL())	
+    println "Loading ${it}..."
+    this.class.classLoader.rootLoader.addURL(it.toURL())
 }
 
 import org.codehaus.groovy.control.*
+
 
 if (args) {
     def configuration = new CompilerConfiguration()
