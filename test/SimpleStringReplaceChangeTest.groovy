@@ -7,9 +7,9 @@ class SimpleStringReplaceChangeTest extends GroovyTestCase {
     void testReplace() {
         def change = new SimpleStringReplaceChange(find:"TEST", replaceWith:"works")
         def lineProcessor = new LineProcessor(change:change)
-        def file = new File("replace.dsl")
+        def lines = ["I hope this TEST!","I hope this TEST!","I hope this TEST!"]
 
-        file.eachLine { line ->
+        lines.each { line ->
             lineProcessor.line = line
             assert lineProcessor.line == "I hope this TEST!"
             assert lineProcessor.processLineChanges() == "I hope this works!"
