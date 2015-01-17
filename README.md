@@ -13,7 +13,7 @@ implement when you want to extend the core language, like meta-programming `java
 
 **Simple Class Diagram**
 
-![Parts of the engine.](images/dslengine.svg)
+![Parts of the engine.](images/dslengine.png)
 
 
 ### Using diesel engine
