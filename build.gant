@@ -35,8 +35,7 @@ target(testenv:'Create mock environment for testing.') {
 		service(type:"me.dslengine.extension.LanguageExtensionProvider", provider:"NumberExtensionProvider")
 		service(type:"me.dslengine.keyword.KeywordProvider", provider:"DebuggingKeywordProvider")
 	}
-	def script = new File("${testDirectory}/dslengine")
-	script.setExecutable(true) && script.canExecute()
+	ant.delete(dir:testDirectory, includes:"*.class")
 }
 
 target(all:'Too lazy to run individual targets.') {
