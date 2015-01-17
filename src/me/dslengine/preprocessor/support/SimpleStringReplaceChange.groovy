@@ -7,6 +7,6 @@ class SimpleStringReplaceChange implements Change {
     String replaceWith
 
     String process(String line) {
-        line.replace find, replaceWith
+        line.replaceAll find, replaceWith
     }   
 }
