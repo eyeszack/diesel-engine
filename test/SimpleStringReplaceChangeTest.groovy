@@ -1,23 +1,18 @@
-#!/usr/bin/env groovy
-import groovy.io.FileType
+import groovy.util.GroovyTestCase
 
 import me.dslengine.preprocessor.*
 import me.dslengine.preprocessor.support.*
 
-try {
-    if (args) {
-        def change = new SimpleStringReplaceChange(find:"TEST", replace:"works")
+class SimpleStringReplaceChangeTest extends GroovyTestCase {
+    void testReplace() {
+        def change = new SimpleStringReplaceChange(find:"TEST", replaceWith:"works")
         def lineProcessor = new LineProcessor(change:change)
-
-        def file = new File(args[0])
+        def file = new File("replace.dsl")
 
         file.eachLine { line ->
             lineProcessor.line = line
+            assert lineProcessor.line == "I hope this TEST!"
             assert lineProcessor.processLineChanges() == "I hope this works!"
         }
-    } else {
-        println "Usage: groovy -cp lib/dslengine-X.X.X.jar SimpleStringReplaceChangeTest.groovy replace.dsl"
     }
-} catch (Exception e) {
-    println e
 }

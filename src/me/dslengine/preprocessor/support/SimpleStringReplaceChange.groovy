@@ -4,9 +4,9 @@ import me.dslengine.preprocessor.Change
 
 class SimpleStringReplaceChange implements Change {
     String find
-    String replace
+    String replaceWith
 
     String process(String line) {
-        line.replace find, replace
+        line.replace find, replaceWith
     }   
 }
