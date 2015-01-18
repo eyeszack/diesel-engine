@@ -3,7 +3,7 @@ cleanPattern << ['**/*.class', '**/*.jar']
 cleanDirectory << ['build/me', 'test/lib']
 clobberDirectory << ['build', 'dist', 'test/lib']
 
-sourceDirectory = 'src'
+sourceDirectory = 'src/main/groovy'
 buildDirectory = 'build'
 distDirectory = 'dist'
 testDirectory = 'test'
