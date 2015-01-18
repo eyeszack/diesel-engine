@@ -1,13 +1,15 @@
 includeTargets << gant.targets.Clean
 cleanPattern << ['**/*.class', '**/*.jar']
-cleanDirectory << ['build/classes/me', 'build/test/classes/me']
-clobberDirectory << ['build', 'dist']
+cleanDirectory << ['build/classes/me', 'build/test/classes/me', 'report']
+clobberDirectory << ['build', 'dist', 'report']
 
 sourceDirectory = 'src/main/groovy'
 buildDirectory = 'build/classes'
 testBuildDirectory = 'build/test/classes'
 distDirectory = 'dist'
 testDirectory = 'src/test/groovy'
+reportDirectory = 'report'
+env = System.getenv()
 
 version = '1.1.0'
     
@@ -27,18 +29,38 @@ target(jar:'Create core dsl jar.') {
    ant.jar(destfile:"${distDirectory}/dslengine-${version}.jar", basedir:buildDirectory)
 }
 
-target(compileTest:'Compile code for testing.') {
+target(test:'Compile code for testing and run it all.') {
     depends(all)
+    
     ant.mkdir(dir:testBuildDirectory)
     ant.taskdef(name:'groovyc', classname:'org.codehaus.groovy.ant.Groovyc')
-    groovyc(srcdir:testDirectory, destdir:testBuildDirectory, classpath:"${distDirectory}/dslengine-${version}.jar", excludes:"*Test.groovy")
-}
-
-target(test:'Run tests.') {
-    depends(compileTest)
-    ant.jar(destfile:"${distDirectory}/dslengine-TESTING-impl.jar", basedir:testBuildDirectory, includes:"**/*.class") {
+    groovyc(srcdir:testDirectory, destdir:testBuildDirectory, classpath:"${distDirectory}/dslengine-${version}.jar")
+    ant.jar(destfile:"${distDirectory}/dslengine-TESTING-impl.jar", basedir:testBuildDirectory, includes:"**/*.class", excludes:"**/*Test*.class") {
         service(type:"me.dslengine.extension.LanguageExtensionProvider", provider:"me.extension.NumberExtensionProvider")
         service(type:"me.dslengine.keyword.KeywordProvider", provider:"me.keyword.DebuggingKeywordProvider")
+    }
+    ant.mkdir(dir:reportDirectory)
+    ant.junit(printsummary:'yes', haltonfailure:'yes') {
+        ant.classpath() {
+            ant.path(path:"${env.GROOVY_HOME}/lib/groovy-2.3.9.jar")
+            ant.path(path:"${env.GROOVY_HOME}/lib/groovy-test-2.3.9.jar")
+            ant.path(path:"${distDirectory}/dslengine-${version}.jar")
+            ant.path(path:"${distDirectory}/dslengine-TESTING-impl.jar")
+            ant.path(path:testBuildDirectory)
+        }
+        ant.batchtest(fork:'yes', todir:"${reportDirectory}") {
+            formatter(type:'xml')
+            ant.fileset(dir:testBuildDirectory) {
+                ant.include(name:'**/*Test*.*')
+                ant.exclude(name:'**/*_closure*.*')                
+            }
+        }
+    }
+    ant.junitreport(todir:"${reportDirectory}") {
+        ant.fileset(dir:reportDirectory) {
+             ant.include(name:'TEST-*.xml')
+        }
+        report(format:"frames", todir:"${reportDirectory}/html")
     }
 }
 

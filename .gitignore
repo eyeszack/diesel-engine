@@ -2,6 +2,7 @@
 dist
 build
 temp
+report
 *.html
 *.txt
 *.json
