@@ -1,3 +1,5 @@
+package me.testcase.dsl
+
 import groovy.util.GroovyTestCase
 
 import org.codehaus.groovy.control.*

@@ -19,14 +19,14 @@ target(init:'Create directories for builds.') {
 }
 
 target(compile:'Compile dsl source.') {
-   depends(clean)
-   ant.taskdef(name:'groovyc', classname:'org.codehaus.groovy.ant.Groovyc')
-   groovyc(srcdir:sourceDirectory , destdir:buildDirectory)
+    depends(clean)
+    ant.taskdef(name:'groovyc', classname:'org.codehaus.groovy.ant.Groovyc')
+    groovyc(srcdir:sourceDirectory , destdir:buildDirectory)
 }
 
 target(jar:'Create core dsl jar.') {
-   ant.copy(file:"LICENSE", todir:"${buildDirectory}")
-   ant.jar(destfile:"${distDirectory}/dslengine-${version}.jar", basedir:buildDirectory)
+    ant.copy(file:"LICENSE", todir:"${buildDirectory}")
+    ant.jar(destfile:"${distDirectory}/dslengine-${version}.jar", basedir:buildDirectory)
 }
 
 target(test:'Compile code for testing and run it all.') {
@@ -58,7 +58,7 @@ target(test:'Compile code for testing and run it all.') {
     }
     ant.junitreport(todir:"${reportDirectory}") {
         ant.fileset(dir:reportDirectory) {
-             ant.include(name:'TEST-*.xml')
+            ant.include(name:'TEST-*.xml')
         }
         report(format:"frames", todir:"${reportDirectory}/html")
     }

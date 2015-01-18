@@ -1,3 +1,5 @@
+package me.testcase.preprocessor
+
 import groovy.util.GroovyTestCase
 
 import me.dslengine.preprocessor.*
