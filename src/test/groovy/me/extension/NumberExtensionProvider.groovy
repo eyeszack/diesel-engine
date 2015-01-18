@@ -1,3 +1,5 @@
+package me.extension
+
 import me.dslengine.extension.*
 
 class NumberExtensionProvider implements LanguageExtensionProvider {

@@ -1,3 +1,5 @@
+package me.keyword
+
 import me.dslengine.keyword.*
 
 class DebuggingKeywordProvider implements KeywordProvider {
