@@ -9,7 +9,7 @@ called the **Service Provider Interface (SPI) API**. I won't spend much time det
 The core class is the **DSLEngineScript** class, it extends Groovy's Script class and adds your keywords to its meta-class and loads any extensions. The other classes used by the engine are 
 the **KeywordProvider** interface and the **Keyword** class. You'll use these two classes to implement the actual keywords to be used in your DSL. 
 And if you want to extend the Groovy language you would implement the **LanguageExtensionProvider** interface. This interface has a single method `extend(script)` that you will
-implement when you want to extend the core language, like meta-programming `java.lang.String` or `java.lang.Number`. I'll list out what steps are required to create a simple DSL that you can test with. If you prefer, you can look at all the same code in the `test` directory. In that directory you'll find a groovy script and a java class that you can use to run your DSLs.
+implement when you want to extend the core language, like meta-programming `java.lang.String` or `java.lang.Number`. I'll list out what steps are required to create a simple DSL that you can test with. If you prefer, you can look at all the test cases and code in the `src/test/groovy` directory. In that directory you'll find test cases that execute against the DSL built in this documentation.
 
 **Simple Class Diagram**
 
@@ -173,7 +173,7 @@ of your extension provider. It too should be placed in the `services` directory 
 
 ### Bonus Java Example
 
-It's quite simple to write your DSL with the Groovy language, but what about using it in a Java application? Since everything written in Groovy is compiled to Java bytecode it's quite simple. All you need when you compile and run your Java application is a few jars. The example java class below is also included in the `test` directory of this project. Once compiled it can be used in a Java application or run in a terminal window. This is just a bare bones implementation, you may want to use this as a point of reference.
+It's quite simple to write your DSL with the Groovy language, but what about using it in a Java application? Since everything written in Groovy is compiled to Java bytecode it's quite simple. All you need when you compile and run your Java application is a few jars. The example java class below is enough to run your DSL. Once compiled it can be used in a Java application or run in a terminal window. This is just a bare bones implementation, you may want to use this as a point of reference.
 
 **Compile time classpath dependencies**
 
