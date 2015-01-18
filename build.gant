@@ -70,4 +70,8 @@ target(all:'Too lazy to run individual targets.') {
     depends(jar)
 }
 
+target(copyJar:'Copies latest dist jar to DSLENGINE_HOME.') {
+    ant.copy(file:"${distDirectory}/dslengine-${version}.jar", todir:"${env.DSLENGINE_HOME}/lib")
+}
+
 setDefaultTarget(all)
