@@ -232,4 +232,4 @@ To test it you may run the following:
 
 It's all good! :)
 
-Copyright (c) 2014 Isaac A. Gomez See the **LICENSE** file for license rights and limitations (MIT).
+Copyright (c) 2015 Isaac A. Gomez See the **LICENSE** file for license rights and limitations (MIT).
