@@ -24,6 +24,12 @@ class SimpleStringReplaceChangeTest extends GroovyTestCase {
         assert lineProcessor.processLineChanges() == "REQUEST GET /resources"
     }
 
+    void testRegexReplaceNoChange() {
+        def change = new SimpleStringReplaceChange(find:"^>", replaceWith:"REQUEST")
+        def lineProcessor = new LineProcessor(line:"REQUEST GET /resources", change:change)
+        assert lineProcessor.processLineChanges() == "REQUEST GET /resources"
+    }
+
     void testTrimSpaceRegexReplace() {
         def change = new SimpleStringReplaceChange(find:"^>", replaceWith:"REQUEST", trimSpace:true)
         def lineProcessor = new LineProcessor(line:"    > GET /resources   ", change:change)
