@@ -2,7 +2,7 @@ package me.dslengine.preprocessor.support
 
 import me.dslengine.preprocessor.Change
 
-class SimpleStringReplaceChange implements Change {
+class SimpleStringReplace implements Change {
     String find
     String replaceWith
     boolean trimSpace
