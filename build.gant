@@ -30,8 +30,6 @@ target(jar:'Create core dsl jar.') {
 }
 
 target(test:'Compile code for testing and run it all.') {
-    depends(all)
-    
     ant.mkdir(dir:testBuildDirectory)
     ant.taskdef(name:'groovyc', classname:'org.codehaus.groovy.ant.Groovyc')
     groovyc(srcdir:testDirectory, destdir:testBuildDirectory, classpath:"${distDirectory}/dslengine-${version}.jar")
@@ -40,7 +38,7 @@ target(test:'Compile code for testing and run it all.') {
         service(type:"me.dslengine.keyword.KeywordProvider", provider:"me.keyword.DebuggingKeywordProvider")
     }
     ant.mkdir(dir:reportDirectory)
-    ant.junit(printsummary:'yes', haltonfailure:'yes') {
+    ant.junit(printsummary:'yes', haltonfailure:'no', failureproperty:"test.failed") {
         ant.classpath() {
             ant.path(path:"${env.GROOVY_HOME}/lib/groovy-2.3.9.jar")
             ant.path(path:"${env.GROOVY_HOME}/lib/groovy-test-2.3.9.jar")
@@ -62,6 +60,7 @@ target(test:'Compile code for testing and run it all.') {
         }
         report(format:"frames", todir:"${reportDirectory}/html")
     }
+    ant.fail(if:"test.failed", message:"Test Failure Oh Noes!!!!\n  For details check ${reportDirectory}/html/index.html")
 }
 
 target(all:'Too lazy to run individual targets.') {
