@@ -37,7 +37,7 @@ In this example we'll create a DSL that supports two keywords, `debug` and `echo
     import me.dslengine.keyword.*  
 
     class DebuggingKeywordProvider implements KeywordProvider {  
-    	def keywords = []  
+        def keywords = []  
     
         def description = "Debugging Keywords - for testing Diesel Engine!!"  
        
@@ -51,23 +51,23 @@ In this example we'll create a DSL that supports two keywords, `debug` and `echo
         }  
     
         List<Keyword> getKeywords() {  
-        	def debugKeyword = new Keyword()  
-        	debugKeyword.name = "debug"  
+            def debugKeyword = new Keyword()  
+            debugKeyword.name = "debug"  
             debugKeyword.help = "simple echo keyword"  
-        	debugKeyword.aliases = ["echo"]  
-        	debugKeyword.closure = { value ->  
-		        if (value instanceof List) {  
-			        value.each {  
-				        println "DEBUG: ${it}"  
-			        }  
-		        } else if (value instanceof Map) {  
-			        value.each { k,v ->  
-				        println "DEBUG: ${k}:${v}"  
-			        }  
-		        } else {  
-			        println "DEBUG: ${value}"  
-		        }  
-	        }  
+            debugKeyword.aliases = ["echo"]  
+            debugKeyword.closure = { value ->  
+                if (value instanceof List) {  
+                    value.each {  
+                        println "DEBUG: ${it}"  
+                    }  
+                } else if (value instanceof Map) {  
+                    value.each { k,v ->  
+                        println "DEBUG: ${k}:${v}"  
+                    }  
+                } else {  
+                    println "DEBUG: ${value}"  
+                }  
+            }  
             keywords << debugKeyword  
     
             keywords  
@@ -140,11 +140,11 @@ You'll more than likely spend most of your time developing keywords for your DSL
     import me.dslengine.extension.*  
 
     class NumberExtensionProvider implements LanguageExtensionProvider {  
-	    void extend(script) {  
+        void extend(script) {  
             Number.metaClass.key = { String key ->  
-		        println "${key}:${delegate}"  
-		    }  
-	    }  
+                println "${key}:${delegate}"  
+            }  
+        }  
     }  
 
 **2)** The remaining steps are the same as implementing keywords, with the exception of the service provider file. For extensions you create a file named **me.dslengine.extension.LanguageExtensionProvider** with the fully qualified class name of your extension provider. It too should be placed in the `services` directory in `META-INF` of your jar. Keywords and extensions can live together in the same jar or separate jars, they will all be found at runtime.  
@@ -155,11 +155,11 @@ You'll more than likely spend most of your time developing keywords for your DSL
 
 **test.dsl**  
 
-	debug "Hello everyone!"  
-	echo "This is cool stuff!"  
-	89.key "Eighty Nine"  
-	def test = new BigDecimal(99)  
-	test.key "wow"  
+    debug "Hello everyone!"  
+    echo "This is cool stuff!"  
+    89.key "Eighty Nine"  
+    def test = new BigDecimal(99)  
+    test.key "wow"  
 
 ### Bonus Java Example  
 
@@ -176,46 +176,46 @@ It's quite simple to write your DSL with the Groovy language, but what about usi
 
 **DieselEngineScriptRunner.java**  
 
-	import groovy.lang.GroovyShell;  
-	import org.codehaus.groovy.control.CompilerConfiguration;  
-	import java.io.File;  
-	import java.io.IOException;  
+    import groovy.lang.GroovyShell;  
+    import org.codehaus.groovy.control.CompilerConfiguration;  
+    import java.io.File;  
+    import java.io.IOException;  
 
-	public class DieselEngineScriptRunner {  
-	
-		private GroovyShell shell;  
-	
-		public DieselEngineScriptRunner() {  
-			CompilerConfiguration configuration = new CompilerConfiguration();  
-	        configuration.setScriptBaseClass("me.dslengine.DSLEngineScript");  
-	        shell = new GroovyShell(configuration);  
-		}  
-	
-		public Object evaluateScript(File script) throws IOException {  
-			return shell.evaluate(script);  
-		}  
-	
-		public Object evaluateScript(String script) {  
-			return shell.evaluate(script);  
-		}  
-	
-	    public static void main(String[] args) {  
-	        try {  
-		        DieselEngineScriptRunner runner = new DieselEngineScriptRunner();  
-	            runner.evaluateScript(new File(args[0]));  
-	        } catch (Exception e) {  
-	            System.out.println(e);  
-	        }  
-	    }  
-	}  
-	
+    public class DieselEngineScriptRunner {  
+    
+        private GroovyShell shell;  
+    
+        public DieselEngineScriptRunner() {  
+            CompilerConfiguration configuration = new CompilerConfiguration();  
+            configuration.setScriptBaseClass("me.dslengine.DSLEngineScript");  
+            shell = new GroovyShell(configuration);  
+        }  
+    
+        public Object evaluateScript(File script) throws IOException {  
+            return shell.evaluate(script);  
+        }  
+    
+        public Object evaluateScript(String script) {  
+            return shell.evaluate(script);  
+        }  
+    
+        public static void main(String[] args) {  
+            try {  
+                DieselEngineScriptRunner runner = new DieselEngineScriptRunner();  
+                runner.evaluateScript(new File(args[0]));  
+            } catch (Exception e) {  
+                System.out.println(e);  
+            }  
+        }  
+    }  
+    
 To compile your java class you'll more than likely run something similar to:  
 
-	$ javac -cp dslengine-1.0.0.jar:groovy-2.3.7.jar DieselEngineScriptRunner.java  
-	
+    $ javac -cp dslengine-1.0.0.jar:groovy-2.3.7.jar DieselEngineScriptRunner.java  
+    
 To test it you may run the following:  
 
-	$ java -cp dslengine-1.0.0.jar:groovy-2.3.7.jar:your-keywords-extensions.jar:. DieselEngineScriptRunner <script>  
+    $ java -cp dslengine-1.0.0.jar:groovy-2.3.7.jar:your-keywords-extensions.jar:. DieselEngineScriptRunner <script>  
 
 
 ## License  

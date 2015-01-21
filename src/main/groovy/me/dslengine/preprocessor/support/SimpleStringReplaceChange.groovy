@@ -9,7 +9,7 @@ class SimpleStringReplaceChange implements Change {
 
     String process(String line) {
         if (trimSpace) {
-        	line = line.trim()
+            line = line.trim()
         }
 
         line.replaceAll find, replaceWith

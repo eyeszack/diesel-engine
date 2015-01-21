@@ -20,7 +20,7 @@ abstract class DSLEngineScript extends Script {
         ServiceLoader<KeywordProvider> keywordProviderLoader = ServiceLoader.load(KeywordProvider.class)
         Iterator<KeywordProvider> keywordProviders = keywordProviderLoader.iterator()
         for (KeywordProvider keywords : keywordProviders) {
-            addKeywords(keywords)   
+            addKeywords(keywords)
         }
     }
 
