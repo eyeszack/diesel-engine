@@ -13,18 +13,28 @@ class AddQuotes implements Change {
         if (entireLine) {
             newLine = "\"${line}\""
         } else if (eachElement) {
-            line.split(delimiter).each { 
-                newLine += "\"${it}\" " 
+            int last = line.split(delimiter).size()-1
+            line.split(delimiter).eachWithIndex { element, i ->
+                newLine += "\"${element}\""
+                
+                if (i<last) {
+                    newLine +="${delimiter}"
+                }
             }
         } else {
+            int last = line.split(delimiter).size()-1
             line.split(delimiter).eachWithIndex { element, i ->
                 if (elements.contains(i)) {
-                    newLine += "\"${element}\"${delimiter}"
+                    newLine += "\"${element}\""
                 } else {
-                    newLine += "${element}${delimiter}"
+                    newLine += "${element}"
+                }
+                
+                if (i<last) {
+                    newLine +="${delimiter}"
                 }
             }
         }
-        newLine.trim()
+        newLine
     }
 }

@@ -30,6 +30,7 @@ target(jar:'Create core dsl jar.') {
 }
 
 target(test:'Compile code for testing and run it all.') {
+    depends(all)
     ant.mkdir(dir:testBuildDirectory)
     ant.taskdef(name:'groovyc', classname:'org.codehaus.groovy.ant.Groovyc')
     groovyc(srcdir:testDirectory, destdir:testBuildDirectory, classpath:"${distDirectory}/dslengine-${version}.jar")
