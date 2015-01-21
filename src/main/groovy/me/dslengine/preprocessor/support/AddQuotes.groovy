@@ -3,6 +3,7 @@ package me.dslengine.preprocessor.support
 import me.dslengine.preprocessor.Change
 
 class AddQuotes implements Change {
+    String delimiter = " "
     boolean eachElement
     boolean entireLine
     def elements = []
@@ -12,15 +13,15 @@ class AddQuotes implements Change {
         if (entireLine) {
             newLine = "\"${line}\""
         } else if (eachElement) {
-            line.split().each { 
+            line.split(delimiter).each { 
                 newLine += "\"${it}\" " 
             }
         } else {
-            line.split().eachWithIndex { element, i ->
+            line.split(delimiter).eachWithIndex { element, i ->
                 if (elements.contains(i)) {
-                    newLine += "\"${element}\" "
+                    newLine += "\"${element}\"${delimiter}"
                 } else {
-                    newLine += "${element} "
+                    newLine += "${element}${delimiter}"
                 }
             }
         }

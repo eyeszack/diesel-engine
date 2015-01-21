@@ -5,6 +5,6 @@ class LineProcessor {
     Change change
 
     String processLineChanges() {
-        change.process(line)
+        change.process line
     }
 }
