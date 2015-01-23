@@ -217,6 +217,11 @@ To test it you may run the following:
 
     $ java -cp dslengine-1.0.0.jar:groovy-2.3.7.jar:your-keywords-extensions.jar:. DieselEngineScriptRunner <script>  
 
+### Preprocessors  
+
+As you begin developing your DSL you may find that you want to _"break"_ the Groovy syntax. This can make your DSL more approachable to your target audience by reducing the amount of special characters or syntax fluff required. Something as simple as removing the need to include `()` in the DSL is nicer, for example `save` versus `save()`. Or maybe you want to make simplified keyword alternatives that use operators like `>` or `&`. Any of these would introduce errors in the Groovy script and prevent it from being evaluated. In order to help enable this kind of DSL building, you can use the preprocessor classes included in the **dslengine-x.x.x.jar**. These classes are located in the `me.dslengine.preprocessor` and `me.dslengine.preprocessor.support` packages. These classes can help you implement a richer syntax for your DSL and can easily be extended for your needs. Of course any contributions back to this project are welcome. :) In the next section we'll go over the classes in a bit more detail.  
+
+-- TODO: COMPLETE SECTIONS
 
 ## License  
 
