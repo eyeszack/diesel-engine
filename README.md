@@ -16,13 +16,17 @@ In diesel engine you'll find a single core class that does all the work, it boot
 
 To work through the example below or to use diesel engine you'll need the **dslengine-x.x.x.jar** file. You can clone this repository and build the required jar file with Gant. Everything you need is in the project itself. There are no external dependencies other than Groovy and Gant. To build the jar run the following:  
 
-    $ gant all  
+    $ gant jar  
 
 You'll end up with the jar in the `dist` directory.  
 
 **Download jar from latest release.**  
 
-You can also download the latest release jar from the [releases](https://github.com/eyeszack/diesel-engine/releases) page if you don't want to clone and build.  
+You can also download the latest release jar from the [releases](https://github.com/eyeszack/diesel-engine/releases) page if you don't want to clone and build. Just package the jar as your project requires and include it in your classpath at runtime.  
+
+**Installing with zip from latest release.**  
+
+If you want to install diesel engine and use it to run your DSL scripts locally, download the latest release zip from the [releases](https://github.com/eyeszack/diesel-engine/releases) page. Unzip to a directory of your choice and set an environment variable that points to your installation.  
 
 ### Example Debugging DSL  
 
@@ -168,7 +172,7 @@ It's quite simple to write your DSL with the Groovy language, but what about usi
 **Compile time classpath dependencies**  
 
 * The latest dslengine-x.x.x.jar  
-* The groovy-x.x.x.jar, I use the one located in my groovy-2.3.7 `lib` directory  
+* The groovy-x.x.x.jar, I use the one located in my groovy-2.3.9 `lib` directory  
 
 **Runtime classpath dependencies, same as compile time plus:**  
 
@@ -211,17 +215,20 @@ It's quite simple to write your DSL with the Groovy language, but what about usi
     
 To compile your java class you'll more than likely run something similar to:  
 
-    $ javac -cp dslengine-1.0.0.jar:groovy-2.3.7.jar DieselEngineScriptRunner.java  
+    $ javac -cp dslengine-1.1.0.jar:groovy-2.3.9.jar DieselEngineScriptRunner.java  
     
 To test it you may run the following:  
 
-    $ java -cp dslengine-1.0.0.jar:groovy-2.3.7.jar:your-keywords-extensions.jar:. DieselEngineScriptRunner <script>  
+    $ java -cp dslengine-1.1.0.jar:groovy-2.3.9.jar:your-keywords-extensions.jar:. DieselEngineScriptRunner <script>  
 
 ### Preprocessors  
 
-As you begin developing your DSL you may find that you want to _"break"_ the Groovy syntax. This can make your DSL more approachable to your target audience by reducing the amount of special characters or syntax fluff required. Something as simple as removing the need to include `()` in the DSL is nicer, for example `save` versus `save()`. Or maybe you want to make simplified keyword alternatives that use operators like `>` or `&`. Any of these would introduce errors in the Groovy script and prevent it from being evaluated. In order to help enable this kind of DSL building, you can use the preprocessor classes included in the **dslengine-x.x.x.jar**. These classes are located in the `me.dslengine.preprocessor` and `me.dslengine.preprocessor.support` packages. These classes can help you implement a richer syntax for your DSL and can easily be extended for your needs. Of course any contributions back to this project are welcome. :) In the next section we'll go over the classes in a bit more detail.  
+As you begin developing your DSL you may find that you want to _"break"_ the Groovy syntax. This can make your DSL more approachable to your target audience, by reducing the amount of special characters or syntax fluff required. Something as simple as removing the need to include `()` is a nice touch, for example `save` versus `save()`. Or maybe you want to offer simplified keyword alternatives using operators like `>` or `&`. Any of these would introduce errors in the Groovy script and prevent it from being evaluated. Well don't let syntax get in the way of your dream DSL.  
 
--- TODO: COMPLETE SECTIONS
+In order to help enable this kind of DSL building, you can use the preprocessor classes included in the **dslengine-x.x.x.jar**. These classes are located in the `me.dslengine.preprocessor` and `me.dslengine.preprocessor.support` packages. These classes can help you implement a richer syntax for your DSL and can easily be extended for your needs. The classes provided are quite simple but should help address a good amount of scenarios. If you don't find what you need it should be easy to build your own preprocessors. And of course any contributions back to this project are welcome. :)   
+
+#### Processing Changes to Scripts  
+The approach taken for preprocessing is simple, each line of your script is read and changes are applied to the current line.  
 
 ## License  
 
