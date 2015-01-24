@@ -20,7 +20,7 @@ class AddQuotesTest extends GroovyTestCase {
         def change = new AddQuotes(entireLine:true)
         def lineProcessor = new LineProcessor(change:change)
         lineProcessor.line = "I need quotes."
-        assert lineProcessor.processLineChanges() == "\"I need quotes.\""
+        assert lineProcessor.processLineChange() == "\"I need quotes.\""
     }
 
     /*
@@ -36,7 +36,7 @@ class AddQuotesTest extends GroovyTestCase {
         def change = new AddQuotes(eachElement:true)
         def lineProcessor = new LineProcessor(change:change)
         lineProcessor.line = "I need quotes."
-        assert lineProcessor.processLineChanges() == "\"I\" \"need\" \"quotes.\""
+        assert lineProcessor.processLineChange() == "\"I\" \"need\" \"quotes.\""
     }
 
     /*
@@ -52,7 +52,7 @@ class AddQuotesTest extends GroovyTestCase {
         def change = new AddQuotes(elements:[2])
         def lineProcessor = new LineProcessor(change:change)
         lineProcessor.line = "> GET /resources"
-        assert lineProcessor.processLineChanges() == "> GET \"/resources\""
+        assert lineProcessor.processLineChange() == "> GET \"/resources\""
     }
 
     /*
@@ -68,6 +68,6 @@ class AddQuotesTest extends GroovyTestCase {
         def change = new AddQuotes(elements:[1,3,5])
         def lineProcessor = new LineProcessor(change:change)
         lineProcessor.line = "To be or not to be"
-        assert lineProcessor.processLineChanges() == "To \"be\" or \"not\" to \"be\""
+        assert lineProcessor.processLineChange() == "To \"be\" or \"not\" to \"be\""
     }
 }

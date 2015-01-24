@@ -4,7 +4,7 @@ class LineProcessor {
     String line
     Change change
 
-    String processLineChanges() {
+    String processLineChange() {
         change.process line
     }
 }

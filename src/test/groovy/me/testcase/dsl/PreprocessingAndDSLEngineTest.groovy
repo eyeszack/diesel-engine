@@ -31,7 +31,7 @@ key:value
             } else {
                 lineProcessor.setChange stringLineChanges
             }
-            newScript += "${lineProcessor.processLineChanges()}\n"
+            newScript += "${lineProcessor.processLineChange()}\n"
         }
         
         def configuration = new CompilerConfiguration()

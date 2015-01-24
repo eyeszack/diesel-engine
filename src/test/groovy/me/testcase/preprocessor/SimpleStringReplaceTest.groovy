@@ -14,25 +14,25 @@ class SimpleStringReplaceTest extends GroovyTestCase {
 
         lines.each { line ->
             lineProcessor.line = line
-            assert lineProcessor.processLineChanges() == "I hope this works!"
+            assert lineProcessor.processLineChange() == "I hope this works!"
         }
     }
 
     void testRegexReplace() {
         def change = new SimpleStringReplace(find:"^>", replaceWith:"REQUEST")
         def lineProcessor = new LineProcessor(line:"> GET /resources", change:change)
-        assert lineProcessor.processLineChanges() == "REQUEST GET /resources"
+        assert lineProcessor.processLineChange() == "REQUEST GET /resources"
     }
 
     void testRegexReplaceNoChange() {
         def change = new SimpleStringReplace(find:"^>", replaceWith:"REQUEST")
         def lineProcessor = new LineProcessor(line:"REQUEST GET /resources", change:change)
-        assert lineProcessor.processLineChanges() == "REQUEST GET /resources"
+        assert lineProcessor.processLineChange() == "REQUEST GET /resources"
     }
 
     void testTrimSpaceRegexReplace() {
         def change = new SimpleStringReplace(find:"^>", replaceWith:"REQUEST", trimSpace:true)
         def lineProcessor = new LineProcessor(line:"    > GET /resources   ", change:change)
-        assert lineProcessor.processLineChanges() == "REQUEST GET /resources"
+        assert lineProcessor.processLineChange() == "REQUEST GET /resources"
     }
 }
