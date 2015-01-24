@@ -32,7 +32,7 @@ You'll end up with the jar in the `dist` directory.
 
 You can also download the latest release jar from the [releases](https://github.com/eyeszack/diesel-engine/releases) page if you don't want to clone and build. Just package the jar as your project requires and include it in your classpath at runtime.  
 
-**Installing with zip from latest release.** _(coming soon)_  
+**Installing with zip from latest release.**  
 
 If you want to install diesel engine and use it to run your DSL scripts locally, download the latest release zip from the [releases](https://github.com/eyeszack/diesel-engine/releases) page. Unzip to a directory of your choice and set an environment variable that points to your installation.  
 
