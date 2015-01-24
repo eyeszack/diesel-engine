@@ -19,18 +19,19 @@ target(init:'Create directories for builds.') {
 }
 
 target(compile:'Compile dsl source.') {
-    depends(clean)
+    depends(init, clean)
     ant.taskdef(name:'groovyc', classname:'org.codehaus.groovy.ant.Groovyc')
     groovyc(srcdir:sourceDirectory , destdir:buildDirectory)
 }
 
 target(jar:'Create core dsl jar.') {
+    depends(compile)
     ant.copy(file:"LICENSE", todir:"${buildDirectory}")
     ant.jar(destfile:"${distDirectory}/dslengine-${version}.jar", basedir:buildDirectory)
 }
 
 target(test:'Compile code for testing and run it all.') {
-    depends(all)
+    depends(jar)
     ant.mkdir(dir:testBuildDirectory)
     ant.taskdef(name:'groovyc', classname:'org.codehaus.groovy.ant.Groovyc')
     groovyc(srcdir:testDirectory, destdir:testBuildDirectory, classpath:"${distDirectory}/dslengine-${version}.jar")
@@ -64,14 +65,8 @@ target(test:'Compile code for testing and run it all.') {
     ant.fail(if:"test.failed", message:"Test Failure Oh Noes!!!!\n  For details check ${reportDirectory}/html/index.html")
 }
 
-target(all:'Too lazy to run individual targets.') {
-    depends(init)
-    depends(compile)
-    depends(jar)
-}
-
 target(copyJar:'Copies latest dist jar to DSLENGINE_HOME.') {
     ant.copy(file:"${distDirectory}/dslengine-${version}.jar", todir:"${env.DSLENGINE_HOME}/lib")
 }
 
-setDefaultTarget(all)
+setDefaultTarget(compile)
