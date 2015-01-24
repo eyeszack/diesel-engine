@@ -8,7 +8,7 @@ class AddQuotes implements Change {
     boolean entireLine
     def elements = []
 
-    String process(String line) {
+    String applyTo(String line) {
         def newLine = ""
         if (entireLine) {
             newLine = "\"${line}\""

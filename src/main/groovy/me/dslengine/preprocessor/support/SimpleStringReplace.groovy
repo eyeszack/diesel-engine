@@ -7,7 +7,7 @@ class SimpleStringReplace implements Change {
     String replaceWith
     boolean trimSpace
 
-    String process(String line) {
+    String applyTo(String line) {
         if (trimSpace) {
             line = line.trim()
         }

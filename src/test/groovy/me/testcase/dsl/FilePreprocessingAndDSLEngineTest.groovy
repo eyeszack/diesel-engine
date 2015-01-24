@@ -12,7 +12,7 @@ class FilePreprocessingAndDSLEngineTest extends GroovyTestCase {
     void testDSL() {
         def stringLineChanges = new ChangeChain(changes:[new AddQuotes(entireLine:true), new AddString(prepend:"debug ")])
         def fileProcessor = new FileProcessor(file:new File("src/test/resources/test.dsl"), change:stringLineChanges)
-        String newScript = fileProcessor.processFileChange()
+        String newScript = fileProcessor.processFile()
         
         def configuration = new CompilerConfiguration()
         configuration.setScriptBaseClass("me.dslengine.DSLEngineScript")

@@ -4,11 +4,11 @@ class FileProcessor {
     File file
     Change change
 
-    String processFileChange() {
+    String processFile() {
         String newFileContents = ""
 
         file.eachLine { line ->
-            newFileContents += change.process line
+            newFileContents += change.applyTo line
             newFileContents += "\n"
         }
         newFileContents

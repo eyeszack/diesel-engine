@@ -4,10 +4,10 @@ class ChangeChain implements Change {
 
     Change[] changes = []
 
-    String process(String line) {
+    String applyTo(String line) {
         String modifiedLine = line
         changes.each { change ->
-            modifiedLine = change.process modifiedLine
+            modifiedLine = change.applyTo modifiedLine
         }
         modifiedLine
     }
