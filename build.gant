@@ -69,4 +69,12 @@ target(copyJar:'Copies latest dist jar to DSLENGINE_HOME.') {
     ant.copy(file:"${distDirectory}/dslengine-${version}.jar", todir:"${env.DSLENGINE_HOME}/lib")
 }
 
+target(release:'Run tests then create jar and zip for release.') {
+    depends(test)
+    ant.mkdir(dir:"${distDirectory}/dslengine/lib")
+    ant.copy(file:"LICENSE", todir:"${distDirectory}/dslengine")
+    ant.copy(file:"${distDirectory}/dslengine-${version}.jar", todir:"${distDirectory}/dslengine/lib")
+    ant.zip(destfile:"${distDirectory}/dslengine-${version}.zip", basedir:"${distDirectory}/dslengine")
+}
+
 setDefaultTarget(compile)
