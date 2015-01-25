@@ -240,7 +240,8 @@ In order to help enable this kind of DSL building, you can use the preprocessor 
 #### Processing Changes to Scripts  
 The approach taken for preprocessing is simple, each line of your script is read and changes are applied to the current line. This can be repeated until the entire file is processed, or conditionally on a line to line basis.  
 
-**Making Changes**  
+#### Making Changes  
+
 The obvious intent of preprocessing is to change your input scripts in some form.  Changes can be made by simply iterating over the script file and modifying as you iterate. To help with this you can implement the `Change` interface with the changes you wish to apply to the current line. If you need to apply multiple changes to a single line, you can use the `ChangeChain` class. As its name implies you will give `ChangeChain` multiple changes that it will iterate over and apply to the current line. To write a change all that you need to provide is the implementation for the `String applyTo(String line)` method of the `Change` interface.  
 
 The following change classes are provided and can be used as a base to build your own:  
@@ -249,7 +250,8 @@ The following change classes are provided and can be used as a base to build you
 * `AddString` - This change will allow you to specify a string value to append, prepend or both to the line.
 * `SimpleStringReplace` - This change replaces a string in the line with another string value. The string value to replace can also be a valid regex pattern.  
 
-**Processing Files and Lines**  
+#### Processing Files and Lines  
+
 As mentioned in the **Making Changes** section; changes are applied to the lines of a file. This is easy enough to do and most of the work is going to be in the changes and their logic. Even though it may be easy, two classes are provided for script preprocessing. The two main classes are the `FileProcessor` and `LineProcessor`. The `FileProcessor` will read a file and for each line in the file it will apply the change it was given. When completed a new `String` will be returned that represents the new script. This string can be used for evaluation by a Groovy shell or saved to a file and evaluated later. The original input file will not be changed by the `FileProcessor`.  The `LineProcessor` is given a single line and a change to apply, the intent in using a line processor is for more control over file preprocessing. You could create multiple changes and apply one or more to single line based on its contents. In this scenario you would control iterating over the file line by line.  
 
 So that's preprocessing in a nutshell. If you would like to see some examples of changes being used and file processing; have a look at the tests in the repository.  
