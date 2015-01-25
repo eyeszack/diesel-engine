@@ -1,4 +1,6 @@
-## Introduction  
+## Welcome  
+
+I'd like to thank you for your interest in diesel engine _(a.k.a. dslengine)_ and hope it can help you build your DSL. I appreciate all feedback and input. Please feel free to fork and submit a pull request if you make any improvements, bug fixes, or new feature additions.  
 
 I'm going to assume that you're already familiar with DSLs and Groovy if you're interested in this project. The intention behind creating diesel engine was quite simple, to quickly build DSLs. Also important was to keep this easy and reusable, so very simple patterns were used in building the initial engine.  
 
