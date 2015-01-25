@@ -304,7 +304,9 @@ public class DieselEngineScriptRunner {
 
 <p>The approach taken for preprocessing is simple, each line of your script is read and changes are applied to the current line. This can be repeated until the entire file is processed, or conditionally on a line to line basis.  </p>
 
-<p><strong>Making Changes</strong><br>
+<h4>
+<a id="making-changes" class="anchor" href="#making-changes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Making Changes</h4>
+
 The obvious intent of preprocessing is to change your input scripts in some form.  Changes can be made by simply iterating over the script file and modifying as you iterate. To help with this you can implement the <code>Change</code> interface with the changes you wish to apply to the current line. If you need to apply multiple changes to a single line, you can use the <code>ChangeChain</code> class. As its name implies you will give <code>ChangeChain</code> multiple changes that it will iterate over and apply to the current line. To write a change all that you need to provide is the implementation for the <code>String applyTo(String line)</code> method of the <code>Change</code> interface.  </p>
 
 <p>The following change classes are provided and can be used as a base to build your own:  </p>
@@ -320,7 +322,9 @@ The obvious intent of preprocessing is to change your input scripts in some form
 </li>
 </ul>
 
-<p><strong>Processing Files and Lines</strong><br>
+<h4>
+<a id="processing-files-and-lines" class="anchor" href="#processing-files-and-lines" aria-hidden="true"><span class="octicon octicon-link"></span></a>Processing Files and Lines</h4>
+
 As mentioned in the <strong>Making Changes</strong> section; changes are applied to the lines of a file. This is easy enough to do and most of the work is going to be in the changes and their logic. Even though it may be easy, two classes are provided for script preprocessing. The two main classes are the <code>FileProcessor</code> and <code>LineProcessor</code>. The <code>FileProcessor</code> will read a file and for each line in the file it will apply the change it was given. When completed a new <code>String</code> will be returned that represents the new script. This string can be used for evaluation by a Groovy shell or saved to a file and evaluated later. The original input file will not be changed by the <code>FileProcessor</code>.  The <code>LineProcessor</code> is given a single line and a change to apply, the intent in using a line processor is for more control over file preprocessing. You could create multiple changes and apply one or more to single line based on its contents. In this scenario you would control iterating over the file line by line.  </p>
 
 <p>So that's preprocessing in a nutshell. If you would like to see some examples of changes being used and file processing; have a look at the tests in the repository.  </p>
